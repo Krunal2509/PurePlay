@@ -4,12 +4,19 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    RecyclerView recyclerView;
+    CardView cardView;
+    ArrayList<songArray> song=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +27,24 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","04:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","04:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","04:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","01:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","01:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","07:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","07:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","07:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","05:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","05:00"));
+        song.add(new songArray(R.drawable.musiclogo,"1 st song","05:00"));
+
+        RecyclerAdapter adapter=new RecyclerAdapter(this,song);
+        recyclerView.setAdapter(adapter);
+
     }
 }
