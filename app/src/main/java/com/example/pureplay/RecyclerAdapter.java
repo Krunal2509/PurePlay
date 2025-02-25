@@ -52,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     GlobalMediaPlayer.mp.release();
                     GlobalMediaPlayer.mp = null;
                 }
+                Toast.makeText(context, "Clicked : " + song.getsName(), Toast.LENGTH_LONG).show();
                 GlobalMediaPlayer.mp = MediaPlayer.create(context, Uri.parse(song.getsPath()));
                 GlobalMediaPlayer.mp.start();
                 Toast.makeText(context, "Playing: " + song.getsName(), Toast.LENGTH_LONG).show();

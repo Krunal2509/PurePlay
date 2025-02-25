@@ -2,23 +2,37 @@ package com.example.pureplay;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
 import static com.example.pureplay.GlobalMediaPlayer.*;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CardView cardView;
     ArrayList<songArray> song=new ArrayList<>();
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    ImageView img_btn_drawer;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +46,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recyclerView=findViewById(R.id.recyclerView);
+        navigationView=findViewById(R.id.navigationView);
+        drawerLayout=findViewById(R.id.drawerLayout);
+        img_btn_drawer=findViewById(R.id.img_btn_drawer);
+
+        img_btn_drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!drawerLayout.isDrawerOpen(navigationView)){
+                    drawerLayout.openDrawer(navigationView);
+                }
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+        });
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -50,5 +85,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerAdapter adapter=new RecyclerAdapter(this,song);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(navigationView))
+            drawerLayout.closeDrawer(navigationView);
+        else
+        super.onBackPressed();
     }
 }
