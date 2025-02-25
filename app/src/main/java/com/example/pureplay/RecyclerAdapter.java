@@ -59,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 duration/=1000;
                 holder.tv_songTime.setText(String.format("%d:%02d",duration/60,duration%60));
             } catch (Exception e) {
-                Toast.makeText(context, "Error playing song", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error playing song", Toast.LENGTH_LONG).show();
             }
         });
 

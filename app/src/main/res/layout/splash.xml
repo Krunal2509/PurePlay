@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#F7BDBDBD"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press Play , Feel Pure  "
+        android:textStyle="bold"
+        android:textColor="#FF000000"
+        android:textSize="30sp"
+        android:fontFamily="@font/spicyriceregular"
+        android:layout_marginBottom="10sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="With"
+        android:textStyle="bold"
+        android:textColor="#FF000000"
+        android:fontFamily="@font/spicyriceregular"
+        android:textSize="30sp"
+        android:layout_marginBottom="10sp"
+        />
+
+    <ImageView
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pureplaylogo"
+        />
+
+</LinearLayout>

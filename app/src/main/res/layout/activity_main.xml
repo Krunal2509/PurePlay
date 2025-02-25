@@ -11,7 +11,6 @@
     android:background="#F7BDBDBD"
     >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0sp"
@@ -76,10 +75,13 @@
         android:layout_height="0sp"
         android:layout_weight="1"
         android:orientation="horizontal"
+        android:background="#F7BDBDBD"
+
         >
 
 
         <TextView
+            android:id="@+id/tv_currentSong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Song Name"
@@ -95,6 +97,9 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="8"
+        android:layout_marginBottom="12sp"
+        android:background="#F7BDBDBD"
+
         >
 
         <ImageView
@@ -108,7 +113,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/rewindbutton"
-            android:layout_margin="7sp"
+            android:layout_margin="5sp"
             android:clickable="true"
             />
         <ImageView
@@ -123,7 +128,7 @@
             android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:background="@drawable/forwardbutton"
-            android:layout_margin="9sp"
+            android:layout_margin="7sp"
             />
         <ImageView
             android:layout_width="0sp"
