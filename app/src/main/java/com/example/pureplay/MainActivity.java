@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import static com.example.pureplay.GlobalMediaPlayer.*;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<songArray> song=new ArrayList<>();
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-    ImageView img_btn_drawer;
+    ImageView img_btn_drawer,btn_play,btn_next,btn_prev;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -45,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        recyclerView=findViewById(R.id.recyclerView);
+
+
+        //////////////////////////////////  NAVIGATION DRAWER ////////////////////////////////////
+
         navigationView=findViewById(R.id.navigationView);
         drawerLayout=findViewById(R.id.drawerLayout);
         img_btn_drawer=findViewById(R.id.img_btn_drawer);
@@ -68,8 +72,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        /////////////////////////////////////// MUSIC LIST ////////////////////////////////////
+
+        recyclerView=findViewById(R.id.recyclerView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        song.add(new songArray(R.drawable.musiclogo,"Dhun Laagi","android.resource://"+getPackageName()+"/"+R.raw.dhunlaagi));
+        song.add(new songArray(R.drawable.musiclogo,"Dil Me Chhupaloonga","android.resource://"+getPackageName()+"/"+R.raw.dilmeinchhupaloonga));
+        song.add(new songArray(R.drawable.musiclogo,"Enna Sona","android.resource://"+getPackageName()+"/"+R.raw.ennasona));
+        song.add(new songArray(R.drawable.musiclogo,"Hathna Chhute Ranjha Ve","android.resource://"+getPackageName()+"/"+R.raw.hathnachuteranjhave));
+        song.add(new songArray(R.drawable.musiclogo,"Nayan","android.resource://"+getPackageName()+"/"+R.raw.nayan));
         song.add(new songArray(R.drawable.musiclogo,"1 song","https://filesamples.com/samples/audio/mp3/sample3.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"2 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"3 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
@@ -85,6 +98,41 @@ public class MainActivity extends AppCompatActivity {
         RecyclerAdapter adapter=new RecyclerAdapter(this,song);
         recyclerView.setAdapter(adapter);
 
+
+
+
+
+        ////////////////////////////////////   MUSIC CONTROL //////////////////////////////////
+
+        GlobalMediaPlayer.imageViewFromMain(this);
+
+        btn_play=findViewById(R.id.btn_play);
+        btn_next=findViewById(R.id.btn_next);
+        btn_prev=findViewById(R.id.btn_prev);
+
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;mp.start();}
+                else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;mp.pause();}
+            }
+        });
+
+
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GlobalMediaPlayer.playNext();
+            }
+        });
+
+        btn_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GlobalMediaPlayer.playPrev();
+            }
+        });
+
     }
 
     @Override
@@ -92,6 +140,6 @@ public class MainActivity extends AppCompatActivity {
         if(drawerLayout.isDrawerOpen(navigationView))
             drawerLayout.closeDrawer(navigationView);
         else
-        super.onBackPressed();
+            super.onBackPressed();
     }
 }
