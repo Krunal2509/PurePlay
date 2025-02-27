@@ -82,7 +82,7 @@ tools:context=".MainActivity"
                 android:layout_height="wrap_content"
                 />
 
-        </LinearLayout>>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +99,13 @@ tools:context=".MainActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Song Name"
-                android:textSize="30sp"
+                android:textColor="#818080"
+                android:textAlignment="center"
+                android:textSize="26sp"
+                android:textFontWeight="500"
+                android:fontFamily="cursive"
+                android:layout_gravity="center"
+                android:clickable="true"
                 />
 
 
@@ -111,7 +117,7 @@ tools:context=".MainActivity"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="8"
-            android:layout_marginBottom="12sp"
+            android:layout_marginBottom="22sp"
             android:background="#F7BDBDBD"
 
             >

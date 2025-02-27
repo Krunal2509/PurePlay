@@ -1,11 +1,14 @@
 package com.example.pureplay;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.example.pureplay.GlobalMediaPlayer.*;
 
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ImageView img_btn_drawer,btn_play,btn_next,btn_prev;
+    TextView tv_currentSong;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -109,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
         btn_play=findViewById(R.id.btn_play);
         btn_next=findViewById(R.id.btn_next);
         btn_prev=findViewById(R.id.btn_prev);
+        tv_currentSong=findViewById(R.id.tv_currentSong);
+
 
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;mp.start();}
-                else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;mp.pause();}
+                if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=false;mp.pause();}
+                else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;mp.start();}
             }
         });
 
@@ -133,13 +139,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        tv_currentSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),Music_Details.class);
+                startActivity(i);
+            }
+        });
+
+
+
+
+
+
     }
 
     @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(navigationView))
-            drawerLayout.closeDrawer(navigationView);
-        else
-            super.onBackPressed();
+    protected void onResume() {   //This method is called when back to activity
+        super.onResume();
+        Toast.makeText(this, "RESUME METHOD", Toast.LENGTH_SHORT).show();
+        new GlobalMediaPlayer(tv_currentSong);
+        if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;}
+        else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;}
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        if(drawerLayout.isDrawerOpen(navigationView))
+//            drawerLayout.closeDrawer(navigationView);
+//        else
+//            super.onBackPressed();
+//    }
 }

@@ -2,24 +2,17 @@ package com.example.pureplay;
 
 import static com.example.pureplay.GlobalMediaPlayer.btn_play;
 import static com.example.pureplay.GlobalMediaPlayer.flag_PlayPause;
-import static com.example.pureplay.GlobalMediaPlayer.mp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -52,22 +45,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.cardView.setOnClickListener(v -> {
             try {
-
-                if (GlobalMediaPlayer.mp != null) {
-                    flag_PlayPause=true;
-                }
-
-                if(flag_PlayPause) {
-                    btn_play.setBackgroundResource(R.drawable.pause);
-                    flag_PlayPause=false;
-                }
-                else{
-                    btn_play.setBackgroundResource(R.drawable.play);
-                    flag_PlayPause=true;
-                }
-
                 Toast.makeText(context, "Clicked : " + song.getsName(), Toast.LENGTH_LONG).show();
                 GlobalMediaPlayer.playSong(context,position,songList,holder);
+
+                if (GlobalMediaPlayer.mp != null) {
+//                    flag_PlayPause=true;
+                    btn_play.setBackgroundResource(R.drawable.pause);
+
+                }
+                else btn_play.setBackgroundResource(R.drawable.play);
+
+            Toast.makeText(context, ""+flag_PlayPause, Toast.LENGTH_SHORT).show();
+//                if(flag_PlayPause) {
+//                    btn_play.setBackgroundResource(R.drawable.pause);
+//                    flag_PlayPause=true;
+//                }
+//                else{
+//                    btn_play.setBackgroundResource(R.drawable.play);
+//                    flag_PlayPause=false;
+//                }
+
 
             } catch (Exception e) {
                 Toast.makeText(context, "Error : "+e.getMessage(), Toast.LENGTH_LONG).show();
@@ -81,10 +78,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return songList.size();
     }
 
-    public static void setSongTime(){
+    public static int setSongTime(){
         int duration=GlobalMediaPlayer.mp.getDuration();
         duration/=1000;
-        holder.tv_songTime.setText(String.format("%d:%02d",duration/60,duration%60));
+        holder.tv_songTime.setText(String.format("%02d:%02d/%d:%02d",0,0,duration/60,duration%60));
+        return duration;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
