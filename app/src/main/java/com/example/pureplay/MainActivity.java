@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         song.add(new songArray(R.drawable.musiclogo,"8 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"9 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"10 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"));
-        song.add(new songArray(R.drawable.musiclogo,"11 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp"));
 
         RecyclerAdapter adapter=new RecyclerAdapter(this,song);
         recyclerView.setAdapter(adapter);
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 GlobalMediaPlayer.playNext();
             }
         });
+
 
         btn_prev.setOnClickListener(new View.OnClickListener() {
             @Override
