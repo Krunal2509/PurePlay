@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         song.add(new songArray(R.drawable.musiclogo,"Hathna Chhute Ranjha Ve","android.resource://"+getPackageName()+"/"+R.raw.hathnachuteranjhave));
         song.add(new songArray(R.drawable.musiclogo,"Nayan","android.resource://"+getPackageName()+"/"+R.raw.nayan));
         song.add(new songArray(R.drawable.musiclogo,"Maan Meri Jaan","android://"+getPackageName()+"/"+R.raw.mannmerijaan));
+        song.add(new songArray(R.drawable.musiclogo,"Apna Banale","android://"+getPackageName()+"/"+R.raw.apnabanale));
         song.add(new songArray(R.drawable.musiclogo,"1 song","https://filesamples.com/samples/audio/mp3/sample3.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"2 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"3 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
