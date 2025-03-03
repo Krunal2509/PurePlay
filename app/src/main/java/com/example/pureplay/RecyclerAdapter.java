@@ -1,7 +1,7 @@
 package com.example.pureplay;
 
 import static com.example.pureplay.GlobalMediaPlayer.btn_play;
-import static com.example.pureplay.GlobalMediaPlayer.flag_PlayPause;
+import static com.example.pureplay.GlobalMediaPlayer.mp;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,7 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         songArray song = songList.get(position);
         holder.img_song.setImageResource(song.getsImg());
         holder.tv_songName.setText(song.getsName());
@@ -48,24 +48,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Toast.makeText(context, "Clicked : " + song.getsName(), Toast.LENGTH_LONG).show();
                 GlobalMediaPlayer.playSong(context,position,songList,holder);
 
-                if (GlobalMediaPlayer.mp != null) {
-//                    flag_PlayPause=true;
-                    btn_play.setBackgroundResource(R.drawable.pause);
-
-                }
+                if (mp!=null && mp.isPlaying()) btn_play.setBackgroundResource(R.drawable.pause);
                 else btn_play.setBackgroundResource(R.drawable.play);
 
-            Toast.makeText(context, ""+flag_PlayPause, Toast.LENGTH_SHORT).show();
-//                if(flag_PlayPause) {
-//                    btn_play.setBackgroundResource(R.drawable.pause);
-//                    flag_PlayPause=true;
-//                }
-//                else{
-//                    btn_play.setBackgroundResource(R.drawable.play);
-//                    flag_PlayPause=false;
-//                }
-
-
+            Toast.makeText(context, ""+btn_play, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(context, "Error : "+e.getMessage(), Toast.LENGTH_LONG).show();
             }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +13,6 @@ import static com.example.pureplay.GlobalMediaPlayer.*;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
@@ -27,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -87,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
         song.add(new songArray(R.drawable.musiclogo,"Enna Sona","android.resource://"+getPackageName()+"/"+R.raw.ennasona));
         song.add(new songArray(R.drawable.musiclogo,"Hathna Chhute Ranjha Ve","android.resource://"+getPackageName()+"/"+R.raw.hathnachuteranjhave));
         song.add(new songArray(R.drawable.musiclogo,"Nayan","android.resource://"+getPackageName()+"/"+R.raw.nayan));
-        song.add(new songArray(R.drawable.musiclogo,"Maan Meri Jaan","android://"+getPackageName()+"/"+R.raw.mannmerijaan));
-        song.add(new songArray(R.drawable.musiclogo,"Apna Banale","android://"+getPackageName()+"/"+R.raw.apnabanale));
+        song.add(new songArray(R.drawable.musiclogo,"Maan Meri Jaan","android.resource://"+getPackageName()+"/"+R.raw.mannmerijaan));
+        song.add(new songArray(R.drawable.musiclogo,"Apna Banale","android.resource://"+getPackageName()+"/"+R.raw.apnabanale));
         song.add(new songArray(R.drawable.musiclogo,"1 song","https://filesamples.com/samples/audio/mp3/sample3.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"2 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
         song.add(new songArray(R.drawable.musiclogo,"3 song","https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
@@ -120,8 +117,10 @@ public class MainActivity extends AppCompatActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=false;mp.pause();}
-                else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;mp.start();}
+                if(mp.isPlaying()){
+                    Toast.makeText(MainActivity.this, "Paused", Toast.LENGTH_SHORT).show();  btn_play.setBackgroundResource(R.drawable.play);mp.pause();}
+                else {
+                    Toast.makeText(MainActivity.this, "Played", Toast.LENGTH_SHORT).show();  btn_play.setBackgroundResource(R.drawable.pause);mp.start();}
             }
         });
 
@@ -150,11 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
     }
 
     @Override
@@ -162,15 +156,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Toast.makeText(this, "RESUME METHOD", Toast.LENGTH_SHORT).show();
         new GlobalMediaPlayer(tv_currentSong);
-        if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;}
-        else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;}
+        if(mp!=null && mp.isPlaying() ){btn_play.setBackgroundResource(R.drawable.pause);}
+        else {btn_play.setBackgroundResource(R.drawable.play);}
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if(drawerLayout.isDrawerOpen(navigationView))
-//            drawerLayout.closeDrawer(navigationView);
-//        else
-//            super.onBackPressed();
-//    }
 }

@@ -1,14 +1,16 @@
 package com.example.pureplay;
 
-import static com.example.pureplay.GlobalMediaPlayer.duration;
-import static com.example.pureplay.GlobalMediaPlayer.flag_PlayPause;
 import static com.example.pureplay.GlobalMediaPlayer.mp;
+import static com.example.pureplay.GlobalMediaPlayer.seekBar_Global;
+import static com.example.pureplay.GlobalMediaPlayer.startSeekbarThread;
+import static com.example.pureplay.GlobalMediaPlayer.time;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 
 public class Music_Details extends AppCompatActivity {
-    public static SeekBar seekBar;
-    public static int songCurrTime=0;
+
     ImageView cardViewMusic,btn_play,btn_next,btn_prev;
     TextView tv_currentSongMusic;
     @Override
@@ -34,7 +35,6 @@ public class Music_Details extends AppCompatActivity {
             return insets;
         });
 
-
          cardViewMusic=findViewById(R.id.cardViewMusic);
 
         Glide.with(this)
@@ -42,21 +42,23 @@ public class Music_Details extends AppCompatActivity {
                 .load(R.raw.musicvideo)
                 .into(cardViewMusic);
 
-        seekBar=findViewById(R.id.seekbar);
 
         GlobalMediaPlayer.imageViewFromMain(this);
+
 
         btn_play=findViewById(R.id.btn_play);
         btn_next=findViewById(R.id.btn_next);
         btn_prev=findViewById(R.id.btn_prev);
         tv_currentSongMusic=findViewById(R.id.tv_currentSongMusic);
+        seekBar_Global=findViewById(R.id.seekbar);
 
+        startSeekbarThread();
 
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;mp.pause();}
-                else {btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;mp.start();}
+                if(mp.isPlaying() ){btn_play.setBackgroundResource(R.drawable.play);mp.pause();}
+                else {btn_play.setBackgroundResource(R.drawable.pause);mp.start();}
             }
         });
 
@@ -75,28 +77,10 @@ public class Music_Details extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    public static void seekBar(){
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    while(songCurrTime<=duration) {
-                        songCurrTime=mp.getDuration()/1000;
-                        seekBar.setProgress(songCurrTime);
-//                        tv_curr_Song_Global.setText(String.format("%02d : %02d / %02d : %02d",(songCurrTime/60),(songCurrTime%60),(duration/60),(duration%60)));
-                    }
-                    songCurrTime=0;
-                    mp=null;
-//                    tv_curr_Song_Global.setText("00:00/00:00");
-            }
-        });
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar_Global.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser && mp!=null)   mp.seekTo(progress);
             }
 
             @Override
@@ -106,20 +90,22 @@ public class Music_Details extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                int value=seekBar.getProgress();
-                value*=1000;
-                mp.seekTo(value);
+
             }
         });
 
 
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+        Toast.makeText(this, "In RESUME", Toast.LENGTH_SHORT).show();
         new GlobalMediaPlayer(tv_currentSongMusic);
-        if(mp!=null && flag_PlayPause){btn_play.setBackgroundResource(R.drawable.pause);flag_PlayPause=false;}
-        else{ btn_play.setBackgroundResource(R.drawable.play);flag_PlayPause=true;}
+        if(mp!=null && mp.isPlaying()){btn_play.setBackgroundResource(R.drawable.pause);}
+        else{ btn_play.setBackgroundResource(R.drawable.play);}
     }
+
 }
