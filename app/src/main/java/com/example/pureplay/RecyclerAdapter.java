@@ -2,8 +2,11 @@ package com.example.pureplay;
 
 import static com.example.pureplay.GlobalMediaPlayer.btn_play;
 import static com.example.pureplay.GlobalMediaPlayer.mp;
+import static com.example.pureplay.GlobalMediaPlayer.tempFlag;
+import static com.example.pureplay.GlobalMediaPlayer.tv_SongTimeGlobal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private Context context;
     private ArrayList<songArray> songList;
-    private static RecyclerAdapter.ViewHolder holder;
 
     RecyclerAdapter(Context context, ArrayList<songArray> songList) {
         this.context = context;
@@ -41,19 +43,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.img_song.setImageResource(song.getsImg());
         holder.tv_songName.setText(song.getsName());
 
-        this.holder=holder;
 
         holder.cardView.setOnClickListener(v -> {
             try {
-                Toast.makeText(context, "Clicked : " + song.getsName(), Toast.LENGTH_LONG).show();
+                if(!holder.tv_SongTime.getText().equals("00:00/00:00")){
+
+                }
+
                 GlobalMediaPlayer.playSong(context,position,songList,holder);
+                if(tempFlag){
+                    Intent i=new Intent(context,Music_Details.class);
+                    context.startActivity(i);
+                    tempFlag=false;
+                }
+
 
                 if (mp!=null && mp.isPlaying()) btn_play.setBackgroundResource(R.drawable.pause);
                 else btn_play.setBackgroundResource(R.drawable.play);
 
-            Toast.makeText(context, ""+btn_play, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Toast.makeText(context, "Error : "+e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Error In Recycler Adapter: "+e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -64,24 +73,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return songList.size();
     }
 
-    public static int setSongTime(){
-        int duration=GlobalMediaPlayer.mp.getDuration();
-        duration/=1000;
-        holder.tv_songTime.setText(String.format("%02d:%02d/%d:%02d",0,0,duration/60,duration%60));
-        return duration;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_songName, tv_songTime;
+        TextView tv_songName,tv_SongTime;
         ImageView img_song;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_songName = itemView.findViewById(R.id.tv_songName);
-            tv_songTime = itemView.findViewById(R.id.tv_songTime);
             img_song = itemView.findViewById(R.id.img_song);
             cardView = itemView.findViewById(R.id.cardView);
+
+            tv_SongTime = itemView.findViewById(R.id.tv_songTime);
+
         }
     }
 }

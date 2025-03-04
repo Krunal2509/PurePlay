@@ -4,6 +4,7 @@ import static com.example.pureplay.GlobalMediaPlayer.mp;
 import static com.example.pureplay.GlobalMediaPlayer.seekBar_Global;
 import static com.example.pureplay.GlobalMediaPlayer.startSeekbarThread;
 import static com.example.pureplay.GlobalMediaPlayer.time;
+import static com.example.pureplay.GlobalMediaPlayer.tv_SongTimeGlobal;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.bumptech.glide.Glide;
 public class Music_Details extends AppCompatActivity {
 
     ImageView cardViewMusic,btn_play,btn_next,btn_prev;
-    TextView tv_currentSongMusic;
+    TextView tv_currentSongMusic,tv_songTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class Music_Details extends AppCompatActivity {
             return insets;
         });
 
-         cardViewMusic=findViewById(R.id.cardViewMusic);
+        cardViewMusic = findViewById(R.id.cardViewMusic);
 
         Glide.with(this)
                 .asGif()
@@ -46,19 +47,26 @@ public class Music_Details extends AppCompatActivity {
         GlobalMediaPlayer.imageViewFromMain(this);
 
 
-        btn_play=findViewById(R.id.btn_play);
-        btn_next=findViewById(R.id.btn_next);
-        btn_prev=findViewById(R.id.btn_prev);
-        tv_currentSongMusic=findViewById(R.id.tv_currentSongMusic);
-        seekBar_Global=findViewById(R.id.seekbar);
+        btn_play = findViewById(R.id.btn_play);
+        btn_next = findViewById(R.id.btn_next);
+        btn_prev = findViewById(R.id.btn_prev);
+        tv_currentSongMusic = findViewById(R.id.tv_currentSongMusic);
+        seekBar_Global = findViewById(R.id.seekbar);
+        tv_SongTimeGlobal = findViewById(R.id.songTime);
+
 
         startSeekbarThread();
 
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mp.isPlaying() ){btn_play.setBackgroundResource(R.drawable.play);mp.pause();}
-                else {btn_play.setBackgroundResource(R.drawable.pause);mp.start();}
+                if (mp.isPlaying()) {
+                    btn_play.setBackgroundResource(R.drawable.play);
+                    mp.pause();
+                } else {
+                    btn_play.setBackgroundResource(R.drawable.pause);
+                    mp.start();
+                }
             }
         });
 
@@ -80,29 +88,23 @@ public class Music_Details extends AppCompatActivity {
         seekBar_Global.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(fromUser && mp!=null)   mp.seekTo(progress);
+                if (fromUser && mp != null) mp.seekTo(progress);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
-
-
     }
-
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "In RESUME", Toast.LENGTH_SHORT).show();
         new GlobalMediaPlayer(tv_currentSongMusic);
         if(mp!=null && mp.isPlaying()){btn_play.setBackgroundResource(R.drawable.pause);}
         else{ btn_play.setBackgroundResource(R.drawable.play);}
