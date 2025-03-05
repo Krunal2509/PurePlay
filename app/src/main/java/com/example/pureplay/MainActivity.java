@@ -63,10 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        Intent i=new Intent(getApplicationContext(),RegisterActivity.class);
+        startActivity(i);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getTitle().equals("Register")) {
+//                    Intent i=new Intent(getApplicationContext(),RegisterActivity.class);
+//                    startActivity(i);
+                }
                 drawerLayout.closeDrawer(navigationView);
                 return true;
             }
@@ -148,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+
 
     }
 
