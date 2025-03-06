@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
-
         //////////////////////////////////  NAVIGATION DRAWER ////////////////////////////////////
 
         navigationView=findViewById(R.id.navigationView);
@@ -153,8 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
 
 
     }

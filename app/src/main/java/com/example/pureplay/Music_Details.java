@@ -46,7 +46,6 @@ public class Music_Details extends AppCompatActivity {
 
         GlobalMediaPlayer.imageViewFromMain(this);
 
-
         btn_play = findViewById(R.id.btn_play);
         btn_next = findViewById(R.id.btn_next);
         btn_prev = findViewById(R.id.btn_prev);
@@ -100,7 +99,6 @@ public class Music_Details extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onResume() {
